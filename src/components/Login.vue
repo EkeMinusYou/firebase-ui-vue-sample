@@ -16,9 +16,19 @@ export default defineComponent({
     let ui = firebaseui.auth.AuthUI.getInstance();
     if (!ui) ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", {
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult) => {
+          const isNewUser = authResult.additionalUserInfo.isNewUser;
+          if (isNewUser) {
+            authResult.user.delete();
+            return false;
+          }
+          return true;
+        }
+      },
       signInSuccessUrl: '', // TODO: redirectUrl
       signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       ]
     });
   }
