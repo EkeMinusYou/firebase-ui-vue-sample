@@ -26,9 +26,10 @@ export default defineComponent({
           return true;
         }
       },
-      signInSuccessUrl: '', // TODO: redirectUrl
+      signInSuccessUrl: 'http://localhost:8080/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
       ]
     });
   }
